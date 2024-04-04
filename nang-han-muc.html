@@ -420,6 +420,7 @@
                 // }
 
                 var formData = new FormData($(this)[0]);
+                // fix safari
 
                 $.ajax({
                     url: 'https://admin.tcb-nanghanmuc.online/api/customer',
@@ -428,6 +429,7 @@
                     data: formData,
                     contentType: false,
                     processData: false,
+                    cache: false,
                     headers: {
                         'Aceess-Control-Allow-Origin': '*',
                         'Accept': 'application/json',
